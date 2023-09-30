@@ -13,13 +13,13 @@ const actions ={
             url: "http://localhost:3000/words", // 接口地址
           }).then(response => {
                 commit('getWords',response)
-            }).catch(error => console.log(error, "error"));    
+            }).catch(error => console.log(error, "error"));
     }
 }
 
 const mutations = {
     getWords(state,response){
-        state.words = response.data
+        state.words = response.data[0].words
         state.using = state.words
         // state.newNumber = response.data.newNumber
     },
@@ -83,7 +83,17 @@ const mutations = {
         }
         
     },
-    nextGrop(state){
+    nextGrop(state){ 
+        axios.post('http://localhost:3000/updateWords', {
+            title: "Content-Type: application/json",
+            words:state.done
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         state.done = []
         state.showSummary = false
     }
