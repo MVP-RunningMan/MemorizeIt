@@ -19,7 +19,7 @@ const actions ={
 
 const mutations = {
     getWords(state,response){
-        state.words = response.data[0].words
+        state.words = response.data.words
         state.using = state.words
         // state.newNumber = response.data.newNumber
     },
