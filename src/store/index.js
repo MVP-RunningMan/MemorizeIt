@@ -7,19 +7,28 @@ import axios from 'axios';
 Vue.use(Vuex)
 
 const actions ={
-    getWords ({ commit }) {
+    getWords({ commit }){
         axios({
             method: "get",
             url: "http://localhost:3000/words", // 接口地址
           }).then(response => {
                 commit('getWords',response)
             }).catch(error => console.log(error, "error"));
+    },
+    getIslogin({ commit }){
+        axios({
+            method: "get",
+            url: "http://localhost:3000/islogin", // 接口地址
+          }).then(response => {
+            console.log(response)
+                commit('getIslogin',response)
+            }).catch(error => console.log(error, "error"));
     }
 }
 
 const mutations = {
     getWords(state,response){
-        state.words = response.data.words
+        state.words = response.data[0].words
         state.using = state.words
         // state.newNumber = response.data.newNumber
     },
@@ -96,6 +105,11 @@ const mutations = {
           });
         state.done = []
         state.showSummary = false
+    },
+    getIslogin(state,response){
+        state.isLogin = response.data.islogin
+        console.log(state.isLogin)
+        console.log("哈哈")
     }
 }
 
@@ -111,6 +125,7 @@ const state = {
     showDetails : false,
     showEg : false,
     showSummary : false,
+    isLogin : false,
 }
 
 const store =  new Vuex.Store({
